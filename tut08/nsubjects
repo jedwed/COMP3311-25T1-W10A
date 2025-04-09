@@ -1,0 +1,56 @@
+#!/usr/bin/python3
+import sys
+import psycopg2
+
+conn = None
+if len(sys.argv) < 2:
+    print("Usage: nsubjects school_search_string")
+    exit(1)
+school_search_string = sys.argv[1]
+
+SCHOOLS_QUERY = """
+SELECT
+    id,
+    longname
+FROM
+    orgunits
+WHERE
+    longname ILIKE '%%' || %s || '%%'
+"""
+
+NUM_SUBJECT_QUERY = """
+SELECT
+    COUNT(*)
+FROM
+    subjects AS s
+JOIN
+    orgunits AS o
+    ON s.offeredby = o.id
+WHERE
+    o.id = %s
+"""
+
+try:
+    conn = psycopg2.connect("dbname=uni")
+    cur = conn.cursor()
+    # Retrieve the schools that match
+    cur.execute(SCHOOLS_QUERY, [school_search_string])
+    schools = cur.fetchall()
+    if len(schools) > 1:
+        print("Multiple Schools Matches")
+        # Print out all the school names
+        for school_id, school_name in schools:
+            print(school_name)
+    elif len(schools) == 1:
+        # The number of subjects that school teaches
+        school_id, school_name = schools[0]
+        cur.execute(NUM_SUBJECT_QUERY, [school_id])
+        (num_subjects,) = cur.fetchone()
+        print(f"{school_name} teaches {num_subjects} subjects")
+
+
+except psycopg2.Error as err:
+    print("database error: ", err)
+finally:
+    if conn is not None:
+        conn.close()

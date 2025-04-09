@@ -1,0 +1,45 @@
+#!/usr/bin/python3
+import sys
+import psycopg2
+
+conn = None
+if len(sys.argv) < 3:
+    print("Usage: course-roll subject term")
+    exit(1)
+
+subject = sys.argv[1]
+term = sys.argv[2]
+
+STUDENTS_ENROLLED_QUERY = """
+SELECT
+    student_id,
+    student_family_name,
+    student_given_name
+FROM
+    student_enrolments
+WHERE
+    subject_code = %s
+    AND term_code = %s
+ORDER BY
+    student_family_name,
+    student_given_name
+"""
+
+try:
+    conn = psycopg2.connect("dbname=uni")
+    cur = conn.cursor()
+    print(f"{subject} {term}")
+    # List of students that are enrolled in
+    # the given subject in the given term
+    cur.execute(STUDENTS_ENROLLED_QUERY, [subject, term])
+    students = cur.fetchall()
+    if len(students) == 0:
+        print("No students")
+        sys.exit(1)
+    for student_id, family_name, given_name in students:
+        print(f"{student_id} {family_name}, {given_name}")
+except psycopg2.Error as err:
+    print("database error: ", err)
+finally:
+    if conn is not None:
+        conn.close()

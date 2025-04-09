@@ -1,0 +1,18 @@
+People(id, family, given, fullname, birthday, origin)
+
+Students(id)
+
+Subjects(id, code, name, uoc, offeredby, ...)
+Courses(id, subject, term, homepage)
+Streams(id, code, name, offeredby, stype, ...)
+Programs(id, code, name, uoc, offeredby, ...)
+
+Terms(id, year, ttype, code, name, starting, ending)
+
+Course_enrolments(student, course, mark, grade)
+Stream_enrolments(part_of_prog_enr, stream)
+Program_enrolments(id, student, term, program, ...)
+
+OrgUnits(id, utype, name, longname, unswid)
+OrgUnit_Types(id, name)
+

@@ -1,0 +1,53 @@
+#!/usr/bin/python3
+import sys
+import psycopg2
+
+conn = None
+if len(sys.argv) < 3:
+    print("Usage: ./courses-studied studentID term")
+    exit(1)
+student_id = sys.argv[1]
+semester = sys.argv[2]
+
+STUDENT_QUERY = """
+SELECT
+    *
+FROM
+    students
+WHERE
+    id = %s
+"""
+
+SUBJECTS_QUERY = """
+SELECT
+    subject_code,
+    subject_name
+FROM
+    student_enrolments
+WHERE
+    student_id = %s
+    AND term_code = %s
+ORDER BY
+    subject_code
+"""
+
+try:
+    conn = psycopg2.connect("dbname=uni")
+    cur = conn.cursor()
+    cur.execute(STUDENT_QUERY, [student_id])
+    res = cur.fetchone()
+    if res is None:
+        print("No such student")
+        sys.exit(1)
+
+    cur.execute(SUBJECTS_QUERY, [student_id, semester])
+    subjects = cur.fetchall()
+    for subject_code, subject_name in subjects:
+        print(f"{subject_code} {subject_name}")
+    # Print out the subjects that the
+    # student_id studied in the given semester
+except psycopg2.Error as err:
+    print("database error: ", err)
+finally:
+    if conn is not None:
+        conn.close()
