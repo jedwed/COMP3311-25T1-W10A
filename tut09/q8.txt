@@ -1,0 +1,52 @@
+Attributes
+acct# - unique account indentifier
+branch# - unique branch identifier
+tfn - unique customer identifier (tax file number)
+kind - type of account (savings, cheque, ...)
+balance - amount of money in account
+city - city where branch is located
+name - customer's name
+
+Unnormalised relation R(acct#, branch#, tfn, kind, balance, city, name)
+
+Each account is held at a specific branch, 
+but a customer may hold more than one account 
+and an account may have more than one associated customer.
+
+Q: Normalise the relation into 3NF
+
+(acct#, tfn)+ = {acct#, tfn, branch, kind ,balance, city, name}
+Candidate key of relation R = acct#, tfn
+
+
+Determine fds
+- acct# -> branch, kind, balance
+- branch# -> city
+- tfn -> name
+
+Normalisation
+First step, find minimal cover of fds
+Set F = {
+- acct# -> branch, kind, balance
+- branch# -> city
+- tfn -> name
+} forms the minimal cover
+
+Second step, 
+Accounts(acct#, branch, kind, balance)
+Branches(branch, city)
+People(tfn, name)
+
+Third step:
+Candidate key (acct#, tfn)
+No table containing both acct# and tfn, create a new table:
+Owns(acct#, tfn)
+
+Hence, our final normalized 3NF schema:
+Accounts(acct#, branch, kind, balance)
+Branches(branch, city)
+People(tfn, name)
+Owns(acct#, tfn)
+
+
+

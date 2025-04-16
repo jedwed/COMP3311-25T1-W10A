@@ -1,0 +1,31 @@
+1.
+a. What functional dependencies are implied 
+if we know that a set of attributes X is a primary key for a relation R?
+
+We can imply that set of attributes X determines every attribute in R
+In other words, All attributes in R are functionally dependent on X
+
+
+b. What functional dependencies can we infer do not hold by inspection 
+of the following relation?
+
+| A   | B   | C   |
+| --- | --- | --- |
+| a   | 1   | x   |
+| b   | 2   | y   |
+| c   | 1   | z   |
+| d   | 2   | x   |
+| a   | 1   | y   |
+| b   | 2   | z   |
+
+A -> B holds
+A -> C does not hold
+TODO: The rest of them
+
+
+c. Suppose that we have a relation schema R(A,B,C) 
+representing a relationship between two entity sets E and F with keys A and B respectively, 
+and suppose that R has (at least) the functional dependencies A → B and B → A. 
+Explain what this tells us about the relationship between E and F.
+
+

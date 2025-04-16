@@ -1,0 +1,65 @@
+Consider the relation R(A,B,C,D,E) and the  
+set of functional dependencies 
+F = { A → B, BC → E, ED → A }
+
+a. List all of the candidate keys for R.
+If an attribute does not appear on the RHS of any fd,
+it MUST be part of the candidate key
+
+CD is not derivable from F, they must be part of the candidate key
+CD+ = {C, D}
+Hence CD is not a candidate key.
+
+Try adding attribute A to CD
+ACD+ = {A, C, D, B, E}
+ACD is a candidate key
+
+BCD+ = {B, C, D, E, A}
+BCD is also a candidate key
+
+CDE+ = {C, D, E, A, B}
+CDE is also a candidate key
+
+Hence, the list of candidate keys are ACD, BCD and CDE
+
+b. Is R in third normal form (3NF)?
+R(A,B,C,D,E)
+F = { A → B, BC → E, ED → A }
+Candidate keys: ACD, BCD and CDE
+
+Consider all fds in F
+A -> B
+1. A -> B is NOT trivial
+2. A is NOT a superkey
+3. B is part of candidate key BCD 
+Hence, A -> B meets the requirements for 3NF
+
+BC -> E
+1. BC -> E is NOT trivial
+2. BC is NOT a superkey
+3. E is part of candidate key CDE
+Hence, BC -> E meets the requirements for 3NF
+
+ED -> A
+1. ED -> A is NOT trivial
+2. ED is NOT a superkey
+3. A is part of candidate key ACD
+Hence, ED -> A meets the requirements for 3NF
+
+Because all fds in F meet the requirements, R is in 3NF
+
+c. Is R in Boyce-Codd normal form (BCNF)?
+R(A,B,C,D,E)
+F = { A → B, BC → E, ED → A }
+Candidate keys: ACD, BCD and CDE
+
+Consider all fds in F
+A -> B
+1. A -> B is NOT trivial
+2. A is NOT a superkey
+Therefore, A -> B does NOT meet the requirements for BCNF
+
+Hence, the relation R is NOT in BCNF
+
+
+

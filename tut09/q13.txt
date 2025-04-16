@@ -1,0 +1,23 @@
+Compute a minimal cover for:
+F   =   { B → A,  D → A,  AB → D } 
+
+First step: converting F to canonical form
+F is already in canonical form
+
+Second step:
+Consider any functional dependencies where LHS has multiple attribute
+Attempt to reduce fd AB -> D
+
+1. B -> A (Given)
+2. B -> BA (Augmentation of 1 with B)
+3. BA -> D (Given)
+Hence, via transitivity using 2 and 3, B -> D.
+Therefore, we can reduce AB -> D to B -> D
+
+F = { B -> A, D -> A, B -> D }
+
+Third step: remove redundant fds
+B -> A can be inferred via transitivity using B -> D and D -> A
+Therefore, B -> A is redundant, remove it
+Therefore, minimal cover Fc = {D -> A, B -> D}
+

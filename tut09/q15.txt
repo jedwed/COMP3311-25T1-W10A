@@ -1,0 +1,60 @@
+Consider the schema R and set of fds F
+R  =  ABCDEFGH
+F  =  { ABH → C,  A → DE,  BGH → F,  F → ADH,  BH → GE }
+Produce a BCNF decomposition of R.
+
+Candidate keys:
+B does not appear on RHS, must be part of candidate key
+B+ = {B}
+
+Try BH+ = {B, H, G, E, F, A, D, C}
+
+Step: Decompose relation R(ABCDEFGH)
+ABH -> C
+1. ABH -> C is NOT trivial
+2. ABH is a superkey
+hence ABC -> C meets the requirements
+
+A -> DE
+1. A -> DE is not trivial
+2. A is not a superkey
+Hence, A -> DE does NOT meet the requirements
+Decompose R(ABCDEFGH) into R1(ABCFGH) and R2(ADE)
+
+Attempt to decompose R1(ABCFGH), F = {ABH -> C, BGH -> F, F -> AH, BH -> GE}
+ABH -> C
+1. ABH -> C is not trivial
+2. ABH+ = {A, B, H, G, E, F, C}, ABH is a superkey
+
+BHG -> F
+1. BGH -> F is not trivial
+2. BHG is a superkey
+
+F -> AH
+1. F -> AH is not trivial
+2. F is NOT a superkey
+Hence F -> AH does NOT meet the requirements
+Decompose R1(ABCFGH) into R3(BCFG) and R4(FAH)
+
+Attempt to decompose R2(ADE), F = { A -> DE }
+A -> DE
+1. A -> DE is not trivial
+2. A is a superkey
+Hence, R2 is in BCNF, no decomposition needed
+
+Attempt to decompose R3(BCFG), F = {}
+R3 is in BCNF, no decomposition needed
+
+Attempt to decompose R4(FAH), F = {F -> AH}
+F -> AH
+1. F -> AH is not trivial
+2. F is a superkey
+Hence, R4 is in BCNF, no decomposition needed
+
+Final schema: R2(ADE), R3(BCFG), R4(FAH)
+
+
+
+
+
+

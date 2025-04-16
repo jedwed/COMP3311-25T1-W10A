@@ -1,0 +1,11 @@
+Consider the relation R(A,B,C,D,E,F,G) and 
+the set of functional dependencies 
+F = { A → B, BC → F, BD → EG, AD → C, D → F, BEG → FA } 
+
+compute the following:
+- A+ = {A, B}
+- ACEG+ = {A, C, E, G, B, F}
+- BD+ = {B, D, E, G, F, A, C}
+
+- ABCDEFG is a superkey BUT NOT a candidate key
+- BD is a superkey AND candidate key
