@@ -1,0 +1,95 @@
+a.
+T1:R(X)      W(X)
+T2:     R(X)      W(X)
+Determine if its conflict serializable and/or view serializable
+1. Determine if its conflict serializable
+2. If it's conflict serializable, the schedule is also view serializable
+3. ELse, check for view serializability
+
+Determine conflict serializability
+Dependency graph:
+T2 -> T1 (T2 R(X) before T1 W(X))
+T1 -> T2 (T1 W(X) before T2 W(X))
+Cycle exists, therefore the schedule is not conflict serializable
+
+Determine view serializability
+Given schedule S
+T1:R(X)      W(X)
+T2:     R(X)      W(X)
+
+Consider serial schedule S' T1 -> T2
+T1:R(X) W(X)
+T2:          R(X) W(X)
+
+For shread data item X
+- T1 gets the initial read on X in both schedules
+- In schedule S, T2 reads the initial value for X,
+  In schedule S', T2 reads the value of X written to by T1
+
+Therefore, we can conclude that the schedule S is not view equivalent to schedule T1 -> T2
+
+
+Given schedule S
+T1:R(X)      W(X)
+T2:     R(X)      W(X)
+
+
+Consider serial schedule S'' T2 -> T1
+T1:           R(X) W(X)
+T2: R(X) W(X)
+
+For data item X
+- T1 gets the initial read of X in S but T2 gets the initla of X in S''
+
+Therefore, schedule S is not view equivalent to serial schedule S''
+
+Thus, schedule is not view equivalent
+
+
+
+
+
+
+b.
+T1 W(X)      R(Y)
+T2      R(Y)      R(X)
+
+Determine if its conflict serializable and/or view serializable
+
+First check conflict serializability via depdency graph
+T1 -> T2 (T1 W(X) before T2 R(X))
+Therefore no cycles in depdency graph
+The schedule is conflict serializable and also view serializable
+
+e.
+T1 R(X)      W(X)
+T2      W(X)
+T3                W(X)
+
+Determine if its conflict serializable and/or view serializable
+Check conflict serializability via dependency graph
+T1 -> T2 (T1 R(X) before T2 W(X))
+T2 -> T1 (T2 W(X) before T1 W(X))
+Dependency graph contains a cycle!!!
+Thefeore, schedule is not conflict serializable
+
+Check view serializability
+Given schedule S
+T1 R(X)      W(X)
+T2      W(X)
+T3                W(X)
+Consider serial schedule S' T1 -> T2 -> T3
+T1 R(X) W(X)
+T2           W(X)
+T3                W(X)
+
+Consider shared data item X
+- T1 gets the initial read on X in both schedules S and S'
+- No subsequent reads after the inital read
+- T3 gets the final write on X in both schedules S and S'
+
+Therefore, the schedule is view serializable but not conflict serializable
+
+
+
+

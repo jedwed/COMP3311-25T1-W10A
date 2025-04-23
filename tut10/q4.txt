@@ -1,0 +1,115 @@
+R
+A  	B  	C
+a1	b1	c1
+a1	b2	c2
+a2	b1	c1
+
+S
+B	  C
+b1	c1
+b2	c2
+
+-----------------------------------------------------
+
+a. 
+R Div S
+A
+a1
+
+-----------------------------------------------------
+b. R Div (Sel[B != b1](S))
+R
+A  	B  	C
+a1	b1	c1
+a1	b2	c2
+a2	b1	c1
+
+S
+B	  C
+b1	c1
+b2	c2
+
+Tmp1 = Sel[B != b1](S)
+Tmp1
+B   C
+b2  c2
+
+Res = R Div Tmp1
+Res
+A
+a1
+
+
+-----------------------------------------------------
+
+c. R Div (Sel[B != b2](S))
+
+
+-----------------------------------------------------
+
+d. (R × S) - (Sel[R.C=S.C](R Join[B=B] S))
+R
+A  	B  	C
+a1	b1	c1
+a1	b2	c2
+a2	b1	c1
+
+S
+B	  C
+b1	c1
+b2	c2
+
+Tmp1 = R Join[B=B] S
+Tmp1
+R.A R.B R.C S.B S.C
+a1  b1  c1  b1  c1
+a2  b1  c1  b1  c1
+a1  b2  c2  b2  c2
+
+Tmp2 = Sel[R.C=S.C](Tmp1)
+R.A R.B R.C S.B S.C
+a1  b1  c1  b1  c1
+a2  b1  c1  b1  c1
+a1  b2  c2  b2  c2
+
+Tmp3 = R x S
+R
+A  	B  	C
+a1	b1	c1
+a1	b2	c2
+a2	b1	c1
+
+S
+B	  C
+b1	c1
+b2	c2
+
+Tmp3
+R.A R.B R.C S.B S.C
+a1	b1	c1  b1  c1
+a1	b1	c1  b2  c2
+a1	b2	c2  b1  c1
+a1	b2	c2  b2  c2
+a2	b1	c1  b1  c1
+a2	b1	c1  b2  c2
+
+Res = Tmp3 - Tmp2
+Tmp3
+R.A R.B R.C S.B S.C
+a1	b1	c1  b1  c1
+a1	b1	c1  b2  c2
+a1	b2	c2  b1  c1
+a1	b2	c2  b2  c2
+a2	b1	c1  b1  c1
+a2	b1	c1  b2  c2
+Tmp2
+R.A R.B R.C S.B S.C
+a1  b1  c1  b1  c1
+a2  b1  c1  b1  c1
+a1  b2  c2  b2  c2
+Res
+R.A R.B R.C S.B S.C
+a1	b1	c1  b2  c2
+a1	b2	c2  b1  c1
+a2	b1	c1  b2  c2
+

@@ -1,0 +1,10 @@
+T1:      R(A) W(Z)                
+T2:                R(B) W(Y)        
+T3: W(A)                     W(B) 
+
+a. Draw a precedence graph
+T3 -> T1 (T3 W(A) before T1 R(A))
+T2 -> T3 (T2 R(B) before T3 W(B))
+Final dependency graph: T2 -> T3 -> T1
+No cycles in the depdency graph, therefore the schedule is
+conflict serializable

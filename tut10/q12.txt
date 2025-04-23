@@ -1,0 +1,13 @@
+T1: R(X) R(Y) W(X)           W(X)
+T2:                R(Y)           R(Y)
+T3:                     W(Y)
+
+a. Determine (by using a precedence graph) whether 
+the schedule is conflict-serializable
+Precedence Graph
+T1 -> T3 (T1 R(Y) before T3 W(Y))
+T2 -> T3 (T2 R(Y) before T3 W(Y))
+T3 -> T2 (T3 W(Y) before T2 R(Y))
+A cycle in the depdency graph T2 <-> T3: therefore
+the schedule is NOT conflict serilizable
+
